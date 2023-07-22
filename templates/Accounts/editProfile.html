@@ -1,0 +1,54 @@
+{% extends 'basic.html' %}
+
+{% block title %}Edit Profile{% endblock title %}
+
+{% block linkCss %}/static/Accounts/css/editProfile.css{% endblock linkCss %}
+
+{% block body %}
+<div class="container w-50">
+    <div class='row p-3 mb-2 bg-info-subtle text-emphasis-info row rounded'>
+        <h3 class='justify-content-center d-flex'>Edit Your Profile</h3>
+    </div>
+
+    <div class='row mt-4 p-3'>
+            <form method='POST' action='/account/edit-profile/{{user.username}}/' enctype="multipart/form-data" > {% csrf_token %}
+                <div  class="profile-image-container mx-auto">
+                    <input type="file" accept="image/*" id="editProfilePhoto" name="editProfilePhoto" class="profile-input">
+                    <label for="editProfilePhoto" class="profile-label">
+                        {% if not curr_detail.profile_photo %}
+                            <img src='/static/default/image.png' id='default-image' alt="Profile Photo" class="profile-preview">
+                        {% else %}
+                            <img src='/media/{{curr_detail.profile_photo}}' id='default-image' alt="Profile Photo" class="profile-preview">
+                        {% endif %}
+                      <div id='previewImage'>
+                        {% comment %} Uploaded Image will be previewed here {% endcomment %}
+                      </div>
+                    </label>
+                </div>
+                <div class="mt-2">
+                  <label for="editUsername" class="form-label">User Name</label>
+                  <input type="text" class="form-control" id="editUsername" name='editUsername'  placeholder='username(a-z,0-9)' value='{{user.username}}' required>
+                </div>
+                <div class='row mt-2'>
+                    <div class="col-6">
+                        <label for="editFname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="editFname" name='editFname' placeholder='First Name' value='{{user.first_name}}' required>
+                      </div>
+                    <div class="col-6">
+                        <label for="editLname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="editLname" name='editLname' placeholder='Last Name' value='{{user.last_name}}' required>
+                    </div>
+                </div>
+                <div class='mt-2'>
+                    <label for="editBio" class="form-label">Bio</label> 
+                    <textarea type="text" class="form-control" id="editBio" name='editBio' placeholder='Wanna tell about your self?'>{{curr_detail.bio}}</textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-info mt-3">Edit</button>
+                <div id="detailsHelp" name='detailsHelp' class="form-text mt-4">We'll never share your details with anyone else.</div>
+              </form>
+    </div>
+</div>
+
+{% endblock body %}
+{% block jsSrc %}/static/Accounts/js/editProfile.js{% endblock jsSrc %}

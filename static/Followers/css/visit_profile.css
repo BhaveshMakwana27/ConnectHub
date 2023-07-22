@@ -1,0 +1,35 @@
+.profile-image{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    margin-bottom: 20px;
+}
+
+.profile-username {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.profile-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.profile-bio {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.profileBg{
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 10px;
+}
+.follow-btn{
+    background-color: #d1d6ff;
+}
+.follow-btn:hover{
+    background-color: #dfe3ff;
+}

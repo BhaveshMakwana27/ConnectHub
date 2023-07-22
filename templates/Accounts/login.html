@@ -1,0 +1,28 @@
+{% extends 'basic.html' %}
+
+{% block title %}Login{% endblock title %}
+
+{% block body %}
+<div class="container mt-4 w-25">
+    <div class='p-3 mb-2 bg-info-subtle text-emphasis-info row rounded'>
+        <h1 class='justify-content-center d-flex'>Login</h1>
+    </div>
+
+    <div class='row mt-4 p-3'>
+    <form method='POST' action='/account/login/'> {% csrf_token %}
+
+        <div class="mt-2">
+          <label for="loginusername" class="form-label">UserName</label>
+          <input type="text" class="form-control" id="loginusername" name='loginusername' placeholder='enter username' required>
+        </div>
+        <div class="mt-2">
+            <label for="loginpassword" class="form-label">Enter Password</label>
+            <input type="Password" class="form-control" id="loginpassword" name='loginpassword' placeholder='Enter Password' required>
+        </div>
+        
+        <button type="submit" class="btn btn-info mt-3">Login</button> <a href="/account/signup/" class='m-2'>New User?</a>
+      </form>
+    </div>
+</div>
+
+{% endblock body %}

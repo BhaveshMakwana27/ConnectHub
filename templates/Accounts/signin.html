@@ -1,0 +1,62 @@
+{% extends 'basic.html' %}
+
+{% block title %}SignIn{% endblock title %}
+
+{% block linkCss %}/static/Accounts/css/signin.css{% endblock linkCss %}
+
+{% block body %}
+<div class="container mt-4 w-50">
+    <div class='row p-3 mb-2 bg-info-subtle text-emphasis-info row rounded'>
+        <h1 class='justify-content-center d-flex'>Register</h1>
+    </div>
+
+    <div class='row mt-4 p-3'>
+            <form method='POST' action='/account/signin/' enctype="multipart/form-data" > {% csrf_token %}
+                <div  class="profile-image-container mx-auto">
+                    <input type="file" accept="image/*" id="profilePhoto" name="profilePhoto" class="profile-input">
+                    <label for="profilePhoto" class="profile-label">
+                      <img src='/static/default/image.png' id='default-image' alt="Profile Photo" class="profile-preview">
+                      <div id='previewImage'>
+                        {% comment %} Uploaded Image will be previewed here {% endcomment %}
+                      </div>
+                    </label>
+                </div>
+                <div class="mt-2">
+                  <label for="username" class="form-label">User Name</label>
+                  <input type="text" class="form-control" id="username" name='username'  placeholder='username(a-z,0-9)' required>
+                </div>
+                <div class='row mt-2'>
+                    <div class="col-6">
+                        <label for="fname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="fname" name='fname' placeholder='First Name' required>
+                      </div>
+                    <div class="col-6">
+                        <label for="lname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lname" name='lname' placeholder='Last Name' required>
+                    </div>
+                </div>
+                <div class='mt-2'>
+                    <label for="emailId" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="emailId" name='emailId' placeholder='abc@gmail.com' required>
+                </div>
+                <div class='mt-2'>
+                    <label for="bio" class="form-label">Bio (Optional)</label> 
+                    <textarea type="text" class="form-control" id="bio" name='bio' placeholder='Wanna tell about your self?'></textarea>
+                </div>
+                <div class="mt-2">
+                    <label for="choosePassword" class="form-label">Choose Password</label>
+                    <input type="Password" class="form-control" id="choosePassword" name='choosePassword' placeholder='Enter Password (atleast 8 characters)' required>
+                </div>
+                <div class="mt-2">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="Password" class="form-control" id="confirmPassword" name='confirmPassword' placeholder='Enter Password again' required>
+                </div>
+                
+                <button type="submit" class="btn btn-info mt-3">Register</button> <a href="/account/login/" class='m-2'>Already Have an Account?</a>
+                <div id="detailsHelp" name='detailsHelp' class="form-text mt-4">We'll never share your details with anyone else.</div>
+              </form>
+    </div>
+</div>
+
+{% endblock body %}
+{% block jsSrc %}/static/Accounts/js/signin.js{% endblock jsSrc %}

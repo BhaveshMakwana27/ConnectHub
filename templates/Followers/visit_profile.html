@@ -1,0 +1,36 @@
+{% extends 'basic.html' %}
+
+{% block title %}Your Profile{% endblock title %}
+{% block linkCss %}/static/Followers/css/visit_profile.css{% endblock linkCss %}
+
+{% block body %}
+<div class="container mt-4 profileBg">
+    <div class="row">
+        <div class="d-md-flex">
+            <div class='col-4 text-center'>
+                {% if not profile_detail.profile_photo %}
+                    <img src="/static/default/image.png" alt="Profile Image" class="profile-image img-fluid">
+                {% else %}
+                    <img src="/media/{{profile_detail.profile_photo}}" alt="Profile Image" class="profile-image img-fluid">
+                {% endif %}
+            </div>
+            <div class='col-2'>
+                <h2 class="profile-username">{{user_detail.username}}</h2>
+                <h2 class="profile-name">{{user_detail.first_name}} {{user_detail.last_name}}</h2>
+                {% if profile_detail.bio|length != 0 %}
+
+                    <p>{{profile_detail.bio}}</p>
+
+                {% endif %}
+            </div>
+            <div class='col-4 mx-auto'>
+                <form action="/followers/visit_profile/{{user_detail.username}}/" method="post">{% csrf_token %}
+                    <button type='submit' class="btn follow-btn">Follow</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+{% block jsSrc %}/static/Accounts/js/profile.js{% endblock jsSrc %}

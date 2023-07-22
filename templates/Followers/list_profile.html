@@ -1,0 +1,36 @@
+{% extends 'Basic.html' %}
+{% block title %} Profiles {% endblock title %}
+{% block linkCss %}/static/Followers/css/profile_list.css{% endblock linkCss %}
+{% block body %}
+
+<div>
+    <div class="container">
+        <div class="row justify-content-center mt-3">
+            <div class="col-lg-6 col-md-8 col-sm-10"> <!-- Set appropriate column widths for different screen sizes -->
+                {% for profile in profile_list %}
+                <div class="postBg mt-2">
+                    <div class='d-flex container'>
+                        <div class='col-md-2 col-sm-3'>
+                            {% if profile.profile_photo %}
+                                <img src="/media/{{profile.profile_photo}}" alt="" srcset="" class='profile_list_imgs'>
+                            {% else %}
+                                <img src="/static/default/image.png" alt="" srcset="" class='profile_list_imgs'>
+                            {% endif %}
+                        </div>
+                        <div class='col-md-6 col-sm-5 ms-1'>
+                            <span><b>{{profile.user}}</b></span>
+                        </div>
+                        <a href="/followers/visit_profile/{{profile.user}}" class='btn'>Visit Profile</a>
+                        {% comment %} <form action="/followers/profiles_list/" method="post">
+                              <button id='profile{{profile.id}}' class="btn">Follow</button>
+                        </form> {% endcomment %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock body %}

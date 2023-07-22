@@ -1,0 +1,50 @@
+{% extends 'basic.html' %}
+
+{% block title %}Your Profile{% endblock title %}
+{% block linkCss %}/static/Accounts/css/profile.css{% endblock linkCss %}
+
+{% block body %}
+<div class="container mt-4 profileBg">
+    <div class="row">
+        <div class="d-md-flex">
+            <div class='col-4 text-center'>
+                {% if not userDetail.profile_photo %}
+                    <div class='profile-image img-fluid'>
+                        <form action="/account/profile/{{ user.username }}/" method="post" enctype="multipart/form-data">{% csrf_token %}
+                            <label for="profilePhoto" class="form-label">Choose Pofile Photo</label>
+                            <input class="form-control" type="file" accept="image/*" id="profilePhoto"  name="profilePhoto">
+                            <div id="imagePreview" class="mt-3">
+
+                            </div>
+                            <button type="submit" class="btn mt-2">Add</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <img src="/media/{{userDetail.profile_photo}}" alt="Profile Image" class="profile-image img-fluid">
+                {% endif %}
+            </div>
+            <div class='col-2'>
+                <h2 class="profile-username">{{user.username}}</h2>
+                <h2 class="profile-name">{{user.first_name}} {{user.last_name}}</h2>
+                {% if userDetail.bio|length == 0 %}
+                    <button id='addBio' class='btn bg-light'>Add bio +</button>
+                    <div id='bioForm' class='container-fluid mt-2' hidden>
+                        <form action="/account/profile/{{ user.username }}/" method="post"> {% csrf_token %}
+                            <textarea name="bio" class="form-control" id="bio" cols='200' rows="3"></textarea>
+                            <button class='btn btn-success mt-2' type="submit">Submit</button>
+                        </form>
+                    </div>
+
+                {% else %}
+                    <p>{{userDetail.bio}}</p>
+                {% endif %}
+            </div>
+            <div class='col-4'>
+                <a href='/account/edit-profile/{{user.username}}' class="btn edit-btn">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+{% block jsSrc %}/static/Accounts/js/profile.js{% endblock jsSrc %}

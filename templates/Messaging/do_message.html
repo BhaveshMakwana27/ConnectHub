@@ -1,0 +1,68 @@
+{% extends 'basic.html' %}
+{% block title %}Message{% endblock title %}
+{% block linkCss %}/static/Messaging/css/do_message.css{% endblock linkCss %}
+
+
+{% block body %}
+
+<div class="container mt-4">
+    <div class="row justify-content-center" >
+        <div class="col-md-4 element">
+            <h2 class="mb-3">Contacts</h2>
+                {% for message,room in messages_with_rooms %}
+                <div class='msg-list m-1'>
+                        <a class='custom-link' href='/messaging/do_message/{{room.room_name}}/'>
+                            <img src="/media/{{ message.following.profile_photo}}" class='profile-photo' alt="img">
+                            <span >{{message.following.user.username}}</span>
+                        </a>
+                </div>
+                {% endfor %}
+                <!-- Add more contacts here -->
+        </div>
+
+        <!-- Right Sidebar - Chat Window -->
+        <div class="col-md-5">
+            <div class="card msg-card-bg">
+                <div class="card-body rounded">
+                    <div id='visitProfile' class='mt-2 rounded-pill d-flex profile-box'>
+                            <div>
+                                {% if receiver.profile_photo %}
+                                    <img src="/media/{{receiver.profile_photo}}" class='profile-photo' alt="abc">
+                                {% else %}
+                                    <img src="/static/default/image.png" class='profile-photo' alt="abc">
+                                {% endif %}
+                            </div>
+                            <div>
+                                <h2 class="p-2 ms-3 mb-1 text-justify">{{receiver.user}}</h2>
+                            </div>
+                    </div>
+                    <div class='scroll mt-4 ml-4 p-3'id='chat-container'>
+                        {% for message in all_messages  %}
+                            {% if message.sender != sender %}
+                                <div class="row  justify-content-start text-start mt-2">
+                                    <span class='receivedMessage'>{{message.content}} <i class='timeStamp'>{{message.timeStamp|time}}</i></span>
+                                </div>
+                                {% else %}
+                                <div class="row  justify-content-end  text-end mt-2">
+                                    <span class='me-2  sendMessage'>{{ message.content }} <i class='timeStamp'>{{message.timeStamp|time}}</i></span>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                        <div class="input-group">
+                            <textarea id='chat-message-input' class="form-control" rows="3" name="message" placeholder="Type your message here..." required></textarea>
+                            <div class="input-group-append ms-2">
+                                <button id="chat-message-submit" type="submit" class="btn btn-primary vertical-center">Send</button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ room_name.room_name|json_script:"room_name" }}
+{{ request.user.username|json_script:"curr_username" }}
+{{ receiver.user.username|json_script:"receiver_username" }}
+{% endblock body %}
+{% block jsSrc %}/static/Messaging/js/do_message.js{% endblock jsSrc %}

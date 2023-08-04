@@ -40,7 +40,17 @@
                 {% endif %}
             </div>
             <div class='col-4'>
-                <a href='/account/edit-profile/{{user.username}}' class="btn edit-btn">Edit Profile</a>
+                <div class='row'>
+                    <div class='col-3'>
+                        <span>Followers {{followers_count}}</span>
+                    </div>
+                    <div class='col-3'>
+                        <span>Following {{following_count}}</span>
+                    </div>
+                </div>
+                <div class='mt-3'>
+                    <a href='/account/edit-profile/{{user.username}}' class="btn edit-btn">Edit Profile</a>
+                </div>
             </div>
         </div>
     </div>

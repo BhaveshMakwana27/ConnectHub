@@ -24,9 +24,35 @@
                 {% endif %}
             </div>
             <div class='col-4 mx-auto'>
-                <form action="/followers/visit_profile/{{user_detail.username}}/" method="post">{% csrf_token %}
-                    <button type='submit' class="btn follow-btn">Follow</button>
-                </form>
+                <div class='row'>
+                    <div class='col-3'>
+                        <span>Followers {{followers_count}}</span>
+                    </div>
+                    <div class='col-3'>
+                        <span>Following {{following_count}}</span>
+                    </div>
+                </div>
+
+                <div class='row mt-5'>
+                    {% if follow_status %}
+                        <div class='col-3'>
+                            <form action="/followers/visit_profile/{{user_detail.username}}/" method="post">{% csrf_token %}
+                                <input type="hidden" name='profileId' value='{{profile_detail.userProfile_id}}'>
+                                <input type="hidden" name='doFollowUnfollow' value='unfollow'>
+                                <button type='submit' class="btn follow-btn">Unfollow</button>
+                            </form>
+                        </div>
+                        <div class='col-3'>
+                            <a href="/messaging/do_message/{{room_name}}" class='btn btn-primary'>Message</a>
+                        </div>
+                    {% else %}
+                        <form action="/followers/visit_profile/{{user_detail.username}}/" method="post">{% csrf_token %}
+                            <input type="hidden" name='profileId' value='{{profile_detail.userProfile_id}}'>
+                            <input type="hidden" name='doFollowUnfollow' value='follow'>
+                            <button type='submit' class="btn follow-btn">Follow</button>
+                        </form>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

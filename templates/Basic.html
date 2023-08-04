@@ -10,6 +10,7 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% block linkCss %}{% endblock linkCss %}">
     <link rel="stylesheet" href="/static/basic.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -56,18 +57,18 @@
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Your Posts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Messages</a>
-                    </li>
-                    {% comment %} <li class="nav-item">
-                        <a class="nav-link" href="/">Requests</a>
-                    </li> {% endcomment %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/followers/profiles_list/">Profiles</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/createPost/{{user.username}}/">Create Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/messaging/">Messages</a>
+                        </li>
+                        {% comment %} <li class="nav-item">
+                            <a class="nav-link" href="/">Requests</a>
+                        </li> {% endcomment %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/followers/profiles_list/">Profiles</a>
+                        </li>
                     {% endif %}
                 </ul>
                
@@ -79,8 +80,8 @@
                         {{ user.username }}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="/account/logout/">Logout</a></li>
                         <li><a class="dropdown-item" href="/account/profile/{{ user.username }}/">View Profile</a></li>
+                        <li><a class="dropdown-item" href="/account/logout/">Logout</a></li>
                     </ul>
                 </div>
                 {% else %}
@@ -108,6 +109,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+
     <script src="{% block jsSrc %}{% endblock jsSrc %}"></script>
         
 </body>

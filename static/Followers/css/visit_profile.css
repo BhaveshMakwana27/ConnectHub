@@ -3,6 +3,8 @@
     height: 200px;
     border-radius: 100%;
     margin-bottom: 20px;
+    object-fit: cover;
+
 }
 
 .profile-username {

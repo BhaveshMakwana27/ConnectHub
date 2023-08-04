@@ -3,5 +3,31 @@
     border-color: black;
     border-radius: 30px;
     background-color: rgb(255, 255, 255);
-    
+    padding-inline: 30px;
+}
+
+
+
+.post-images{
+    max-width: 100%;
+    width: auto;
+    height: 512px;
+    margin: 5px;
+    display: block;
+    object-fit: cover;
+}
+
+.profile-image {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.uploader-text{
+    vertical-align: middle;
+    margin: 17px;
+    text-decoration: none;
+    color: black;
 }

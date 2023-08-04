@@ -1,0 +1,83 @@
+/* Message Area */
+.card.msg-card-bg {
+    background-color: #f8f9fa;
+}
+
+.scroll {
+    height: 450px;
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.receiver-profile-photo{
+    width: 50px;
+}
+
+.receivedMessage, .sendMessage {
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin: 3px;
+    width: fit-content;
+    max-width: 70%;
+}
+
+.receivedMessage {
+    background-color: #dcf8c6;
+    
+}
+.sendMessage {
+    background-color: #f0f0f0;
+    float:right;
+    display: block;
+}
+
+.timeStamp{
+    font-size: 11px;
+    margin-left: 2px;
+}
+
+
+
+
+/* Messages List Area */
+
+.msg-list{
+    border-radius: 30px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: -20px 20px 20px rgb(216, 216, 216);
+}
+
+.msg-list :hover{
+    border-radius: 30px;
+    background-color: rgb(255, 244, 244);
+}
+
+.profile-box{
+    background-color: #f3f3f3;
+    box-shadow: -1px 1px 24px -20px;
+}
+
+.profile-photo{
+    height: 50px;
+    width:50px;
+    margin: 5px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+  .custom-link {
+    text-decoration: none;
+    color:black;
+    font-weight: 600;
+  }
+
+  #visitProfile:hover{
+    cursor: pointer;
+  }
+
+
+  @media (max-width: 767px) {
+    .element {
+      display: none;
+    }
+  }

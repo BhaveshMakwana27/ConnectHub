@@ -4,6 +4,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from Accounts.models import UserProfile
+from Followers.models import Follow
 import os
 
 def handleAccount(request):
@@ -65,6 +66,11 @@ def handleSignin(request):
 def userProfileHandle(request,uname):
     curr_user = request.user
     userProfile = UserProfile.objects.filter(user=curr_user.id).first()
+
+    # getting howmany followers and howmany following the loggedin user have
+    followers_count = Follow.objects.filter(following = userProfile).count()
+    following_count = Follow.objects.filter(follower = userProfile).count()
+    
     if request.method == 'POST':
         updateBio = request.POST.get('bio')
         profileImage = request.FILES.get('profilePhoto')
@@ -75,7 +81,9 @@ def userProfileHandle(request,uname):
         userProfile.save()
 
     context = {
-        'userDetail':userProfile
+        'userDetail':userProfile,
+        'following_count':following_count,
+        'followers_count':followers_count,
     } 
     return render(request,'Accounts/profile.html',context)
 

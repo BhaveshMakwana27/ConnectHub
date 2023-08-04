@@ -1,9 +1,16 @@
+
+
 .profile-image{
-    width: 200px;
-    height: 200px;
+    max-width: 200px;
+    max-height: 200px;
+    width: auto;
+    height: auto;
     border-radius: 100%;
     margin-bottom: 20px;
+    object-fit: cover;
 }
+
+
 
 .profile-username {
     font-size: 24px;
@@ -33,3 +40,6 @@
 .edit-btn:hover{
     background-color: #dfe3ff;
 }
+
+
+

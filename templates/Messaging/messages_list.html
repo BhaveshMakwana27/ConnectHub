@@ -1,0 +1,29 @@
+{% extends 'basic.html' %}
+{% block title %}All Messages{% endblock title %}
+{% block linkCss %}/static/Messaging/css/messageList.css{% endblock linkCss %}
+
+
+{% block body %}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <!-- Left Sidebar - Contact List -->
+        <div class="col-md-4">
+            <h2 class="mb-3">Contacts</h2>
+                {% for message, room in messages_with_rooms  %}
+                <div class='msg-list m-1'>
+                    <div class='msg-list m-1'>
+                        <a id='getIntoRoom{{message.following.user.id}}' class='getIntoRoom custom-link' href='/messaging/do_message/{{room.room_name}}/'>
+                            <img src="/media/{{ message.following.profile_photo}}" class='profile-photo' alt="img">
+                            <span class='room-name'>{{message.following.user.username}}</span>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- Add more contacts here -->
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+{% block jsSrc %}/static/Messaging/js/messages_list.js{% endblock jsSrc %}

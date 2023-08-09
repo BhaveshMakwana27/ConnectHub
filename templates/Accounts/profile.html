@@ -4,10 +4,10 @@
 {% block linkCss %}/static/Accounts/css/profile.css{% endblock linkCss %}
 
 {% block body %}
-<div class="container mt-4 profileBg">
-    <div class="row">
-        <div class="d-md-flex">
-            <div class='col-4 text-center'>
+<div class="container mt-4 ">
+    <div class="row profileBg">
+        <div class="d-flex">
+            <div class="col-xl-5 col-md-4 col-sm-5 col-6 text-center">
                 {% if not userDetail.profile_photo %}
                     <div class='profile-image img-fluid'>
                         <form action="/account/profile/{{ user.username }}/" method="post" enctype="multipart/form-data">{% csrf_token %}
@@ -23,36 +23,48 @@
                     <img src="/media/{{userDetail.profile_photo}}" alt="Profile Image" class="profile-image img-fluid">
                 {% endif %}
             </div>
-            <div class='col-2'>
-                <h2 class="profile-username">{{user.username}}</h2>
-                <h2 class="profile-name">{{user.first_name}} {{user.last_name}}</h2>
-                {% if userDetail.bio|length == 0 %}
-                    <button id='addBio' class='btn bg-light'>Add bio +</button>
-                    <div id='bioForm' class='container-fluid mt-2' hidden>
-                        <form action="/account/profile/{{ user.username }}/" method="post"> {% csrf_token %}
-                            <textarea name="bio" class="form-control" id="bio" cols='200' rows="3"></textarea>
-                            <button class='btn btn-success mt-2' type="submit">Submit</button>
-                        </form>
-                    </div>
-
-                {% else %}
-                    <p>{{userDetail.bio}}</p>
-                {% endif %}
-            </div>
-            <div class='col-4'>
+            <div class="row col-xl-7 col-md-8 col-sm-8 col-7 d-flex">
                 <div class='row'>
-                    <div class='col-3'>
-                        <span>Followers {{followers_count}}</span>
-                    </div>
-                    <div class='col-3'>
-                        <span>Following {{following_count}}</span>
-                    </div>
+                    <h2 class="profile-username">{{user.username}}</h2>
+                    <h2 class="profile-name">{{user.first_name}} {{user.last_name}}</h2>
+                    {% if userDetail.bio|length == 0 %}
+                        <button id='addBio' class='btn bg-light'>Add bio +</button>
+                        <div id='bioForm' class='container-fluid mt-2' hidden>
+                            <form action="/account/profile/{{ user.username }}/" method="post"> {% csrf_token %}
+                                <textarea name="bio" class="form-control" id="bio" cols='200' rows="3"></textarea>
+                                <button class='btn btn-success mt-2' type="submit">Submit</button>
+                            </form>
+                        </div>
+    
+                    {% else %}
+                        <p class='profile-bio'>{{userDetail.bio}}</p>
+                    {% endif %}
                 </div>
-                <div class='mt-3'>
-                    <a href='/account/edit-profile/{{user.username}}' class="btn edit-btn">Edit Profile</a>
+                <div class='row'>
+                    <div class='row'>
+                        <div class="col-xxl-3 col-lg-4 col-md-5 col-6">
+                            <a href='/followers/visit_profile/{{user.username}}/followers_list/' class='connection-list-btn btn-text'>Followers {{followers_count}}</a>
+                        </div>
+                        <div class="col-xxl-3 col-lg-4 col-md-5 col-6">
+                            <a href='/followers/visit_profile/{{user.username}}/followings_list/' class='connection-list-btn btn-text'>Following {{following_count}}</a>
+                        </div>
+                    </div>
+                    <div class='mt-3'>
+                        <a href='/account/edit-profile/{{user.username}}' class="btn edit-btn btn-text">Edit Profile</a>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class='row profile-post'>
+        {% for key,cover_photo in cover_photos.items  %}
+        {% with cover_photo=cover_photo.image  %}    
+        <div class='col-4 col-sm-4 col-md-3 col-lg-2'>
+            <a href="/profile_posts/{{user.username}}"><img src="/media/{{cover_photo}}/" class='profile-post-cover-image' alt=""></a>
+        </div>
+        {% endwith %}
+        {% endfor %}
     </div>
 </div>
 

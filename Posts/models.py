@@ -30,11 +30,11 @@ class PostLike(models.Model):
 class PostComment(models.Model):
     comment_id = models.AutoField(primary_key=True)
     post = models.ForeignKey(Post,on_delete=models.CASCADE)
-    user = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+    commenter = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
     comment = models.TextField()
     parent = models.ForeignKey('self',on_delete=models.CASCADE,null=True)
     timeStamp = models.DateTimeField(default=now)
 
     def __str__(self):
-        return f'{self.comment_id} : {self.comment[0:20]} by {self.user}'
+        return f'{self.comment_id} : {self.comment[0:20]} by {self.commenter.user.username}'
     

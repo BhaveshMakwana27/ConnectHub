@@ -24,16 +24,17 @@ chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
     let currTime = new Date()
     let ampm = currTime.getHours()<12 ? 'a.m.':'p.m.'
-    if(data.username == data.receiver){
+     
+    if(data.username != userName){
         document.querySelector('#chat-container').innerHTML = document.querySelector('#chat-container').innerHTML+  
-                        ` <div class="row justify-content-start receivedMessage text-start mt-2">
-                                    <span>${data.message}<i class='timeStamp'>${currTime.getHours()}:${currTime.getMinutes()} ${ampm}</i></span>
+                        ` <div class="row justify-content-start text-start mt-2">
+                                    <span class='receivedMessage'>${data.message}<i class='timeStamp'>${currTime.getHours()}:${currTime.getMinutes()} ${ampm}</i></span>
                           </div>
                         `
     }else{
         document.querySelector('#chat-container').innerHTML = document.querySelector('#chat-container').innerHTML+  
-                        `<div class="row justify-content-start sendMessage text-end mt-2">
-                                    <span>${data.message}<i class='timeStamp'>${currTime.getHours()}:${currTime.getMinutes()} ${ampm}</i></span>
+                        `<div class="row justify-content-end text-end mt-2">
+                                    <span class='me-2 sendMessage'>${data.message}<i class='timeStamp'>${currTime.getHours()}:${currTime.getMinutes()} ${ampm}</i></span>
                             </div>
                         `
 

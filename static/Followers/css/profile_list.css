@@ -4,3 +4,10 @@
     width: 60px;
     object-fit: cover;
 }
+.resultBg{
+    border: 2px;
+    border-color: black;
+    border-radius: 30px;
+    background-color: rgb(255, 255, 255);
+    padding-inline: 30px;
+}

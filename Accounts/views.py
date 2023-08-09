@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from Accounts.models import UserProfile
 from Followers.models import Follow
+from Posts.models import Post,PostComment,PostImages,PostLike
 import os
 
 def handleAccount(request):
@@ -70,7 +71,16 @@ def userProfileHandle(request,uname):
     # getting howmany followers and howmany following the loggedin user have
     followers_count = Follow.objects.filter(following = userProfile).count()
     following_count = Follow.objects.filter(follower = userProfile).count()
-    
+
+    # getting user posts
+    posts = Post.objects.filter(uploader=userProfile).order_by('uploadDate')
+    post_photos = PostImages.objects.filter(post__in=posts)
+    cover_photos = {}
+    for post_photo in post_photos:
+        if post_photo.post not in cover_photos.keys():
+            cover_photos[post_photo.post] = post_photo
+
+
     if request.method == 'POST':
         updateBio = request.POST.get('bio')
         profileImage = request.FILES.get('profilePhoto')
@@ -84,6 +94,9 @@ def userProfileHandle(request,uname):
         'userDetail':userProfile,
         'following_count':following_count,
         'followers_count':followers_count,
+        'post_photos':post_photos,
+        'cover_photos':cover_photos,
+        'posts':posts
     } 
     return render(request,'Accounts/profile.html',context)
 

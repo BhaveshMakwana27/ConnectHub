@@ -1,0 +1,257 @@
+{% extends 'Basic.html' %}
+{% block title %} {{user.username}} Posts {% endblock title %}
+{% block linkCss %}/static/Posts/css/post.css{% endblock linkCss %}
+{% block body %}
+{% load getDict %}
+
+<div class="container col-xl-5  col-lg-6 col-md-8 col-sm-12">
+    {% for key, value in profilePosts.items %}
+    {% with post=value.post post_images=value.post_images post_like_count=value.post_like_count post_liker=value.post_liker post_comments=value.post_comments post_comments_replies=value.post_comments_replies %}
+        <div class="row justify-content-center mt-3">
+            <div class="postBg">
+                <div class="row p-1 pt-3 border-bottom">
+                    <div class='d-flex uploader-theme'>
+                        <img src="/media/{{post.uploader.profile_photo}}" class='profile-image post-images' alt="" srcset="">
+                        {% if post.uploader.user == user %}
+                        <a href="/account/profile/{{post.uploader.user}}/" class='uploader-text'>
+                            <h4>{{post.uploader.user}}</h4>
+                        </a>
+                        {% else %}
+                        <a href="/followers/visit_profile/{{post.uploader.user}}/" class='uploader-text'>
+                            <h4>{{post.uploader.user}}</h4>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row p-1">
+                    <div>
+                        <p>{{post.post_description}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex justify-content-center">
+                        <div id="post-photo-carousel{{key}}" class="carousel carousel-fade" data-bs-touch="true">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    {% for image in post_images %}
+                                        {% if image.post == post %}
+                                            <img src="/media/{{image.image}}" class='post-images' alt="" srcset="">
+                                        {% endif %}
+                                        {% if not forloop.last %}
+                                            </div>
+                                            <div class='carousel-item'>
+                                        {% endif %}
+                                    
+                                    {% endfor %}
+                                </div>
+                                {% if post_images|length > 1 %}
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#post-photo-carousel{{key}}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#post-photo-carousel{{key}}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row p-1 mt-2 border-top border-bottom">
+                    {% if post_like_count|length > 0 %}
+                        <span id='likes_count{{post.post_id}}' class='col-2'><i class='bi bi-hand-thumbs-up-fill' style='color:#0000ffbd'></i> {{post_like_count|length}}</span>
+                    {% else %}
+                        <span id='likes_count{{post.post_id}}' class='col-2' hidden>0</span>
+                    {% endif %}
+                    {% if post_comments|length > 0 %}
+                    <span id='comment_count{{post.post_id}}' class='col-2'><i class='bi bi-chat'></i> {{post_comments|length}}</span>
+                    {% endif %}
+                </div>
+
+
+                {% comment %} Like Section {% endcomment %}
+                <div class="row p-1 mb-3 mt-2">
+                    <div id="likeDislike{{ post.post_id }}" class="col-6 likeDislikeDiv justify-content-center d-flex"> 
+                        <form id='{{post.post_id}}' action="/like_post/{{post.post_id}}/" method='post' class='w-100 like-form'> {% csrf_token %}
+                            <input type="hidden" id='post_id' value='{{post.post_id}}'>
+                            <button id="likeButton{{ post.post_id }}" class="btn btn-light likeBtn w-100">
+                                    {% if post_liker %}
+                                    <i class='bi bi-hand-thumbs-up-fill'></i> Liked
+                                    {% else %}
+                                    <i class='bi bi-hand-thumbs-up'></i> Like
+                                    {% endif %}
+                            </button>
+                        </form>
+                    </div>
+
+                    {% comment %} Comment Modal Section {% endcomment %}
+                    <div class='col-6'>
+                        <!-- Button trigger modal -->
+                        <button id='commentId{{post.post_id}}' type="button" class="btn btn-light w-100" data-bs-toggle="modal" data-bs-target="#commentModal{{post.post_id}}" onclick='handleOpenModal()'>
+                            <i class='bi bi-chat'></i>
+                             Comments
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="commentModal{{post.post_id}}" tabindex="-1" aria-labelledby="modalLabel{{post.post_id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-theme modal-dialog-scrollable">
+                            <div class="modal-content col-3">
+                                <div class="modal-header modal-header-theme shadow-sm">
+                                <h2 class="modal-title" id="modalLabel{{post.post_id}}">
+                                    <div class='d-flex '>
+                                        <img src="/media/{{post.uploader.profile_photo}}" class='profile-image post-images' alt=""
+                                            srcset="">
+                                        {% if post.uploader.user == user %}
+                                        <a href="/account/profile/{{post.uploader.user}}/" class='uploader-text'>
+                                            <h4>{{post.uploader.user}}</h4>
+                                        </a>
+                                        {% else %}
+                                        <a href="/followers/visit_profile/{{post.uploader.user}}/" class='uploader-text'>
+                                            <h4>{{post.uploader.user}}</h4>
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </h2>
+                                <button type="button" class="btn-close bg-light rounded-circle" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row p-1">
+                                        <div>
+                                            <p>{{post.post_description}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row border-bottom">
+                                        <div class="d-flex justify-content-center">
+                                            <div id="post-photo-modal-carousel{{key}}" class="carousel carousel-fade" data-bs-touch="true">
+                                                <div class="carousel-inner">
+                                                    <div class="carousel-item active">
+                                                        {% for image in post_images %}
+                                                            {% if image.post == post %}
+                                                                <img src="/media/{{image.image}}" class='post-images' alt="" srcset="">
+                                                            {% endif %}
+                                                            {% if not forloop.last %}
+                                                                </div>
+                                                                <div class='carousel-item'>
+                                                            {% endif %}
+                                                        
+                                                        {% endfor %}
+                                                    </div>
+                                                    {% if post_images|length > 1 %}
+                                                        <button class="carousel-control-prev" type="button"
+                                                            data-bs-target="#post-photo-modal-carousel{{key}}" data-bs-slide="prev">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Previous</span>
+                                                        </button>
+                                                        <button class="carousel-control-next" type="button"
+                                                            data-bs-target="#post-photo-modal-carousel{{key}}" data-bs-slide="next">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Next</span>
+                                                        </button>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id='commentsHere' class='row'>
+                                        <div id='comments{{post.post_id}}' class="row">
+                                            {% for comment in post_comments %}
+                                            <div class="row mt-3">
+                                                <div class="col-md-1 col-2">
+                                                    <img src="/media/{{comment.commenter.profile_photo}}" class='mx-auto comments-profile-photo' style='width: 32px;'alt='user'>
+                                                </div>
+                                                <div class="col-md-11 col-10 rounded">
+                                                    <div class='comment-box'>
+                                                        <span><b>{{comment.commenter.user.username}}</b></span><span style='font-size:smaller;'> {{comment.timeStamp|timesince}} ago</span>
+                                                        <div class='mt-1 ms-1'>
+                                                            <span>{{comment.comment}}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    {% if user.is_authenticated %}
+                                                            <button class='btn' data-bs-toggle="collapse"
+                                                                data-bs-target="#reply{{comment.comment_id}}" aria-expanded="false"
+                                                                aria-controls="reply{{comment.comment_id}}">Reply</button> 
+                                                    {% endif %}
+                                                    <!-- IF Reply Button is clicked reploy box will be displayed-->    
+                                                    <div class="collapse mt-2" id="reply{{comment.comment_id}}">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-md-1">
+                                                                    <img src="/media/{{currUser.profile_photo}}" class='mx-auto comments-profile-photo' style='width: 32px;'>
+                                                                </div>
+                                                                <div class='col-md-10'>
+                                                                    <form id='reply{{post.post_id}}' action="/postComments/" method="post"> {% csrf_token %}
+                                                                        <input type="hidden" name="parent_id" id='parent_id' value="{{comment.comment_id}}">
+                                                                        <input type="hidden" id='post_id' name='post_id' value="{{post.post_id}}">
+                                                                        <textarea name="comment" id="comment{{post.post_id}}" class="form-control" cols="30" rows="2" placeholder='Reply here..'></textarea>
+                                                                        
+                                                                        <button type="submit" class='btn btn-light rounded-pill  post-btn mt-1'>Submit</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+                                                     <!-- IF Replies Button is clicked replies of that comment will be displayed-->
+               
+                                                    <button class='btn rounded-pill' data-bs-toggle="collapse"
+                                                        data-bs-target="#replies{{comment.comment_id}}" aria-expanded="false"
+                                                        aria-controls="replies{{comment.comment_id}}">Replies</button>
+                                                    
+                                                    
+                                                    {% for reply in post_comments_replies|get_val:comment.comment_id %}
+                                                            <div class="collapse mt-2" id="replies{{comment.comment_id}}">
+                                                            
+                                                                    <div class="row">
+                                                                        <div class="col-md-1 col-2">
+                                                                            <img src="/media/{{reply.commenter.profile_photo}}" class='mx-auto comments-profile-photo' style='width: 32px;' alt='user'>
+                                                                        </div>
+                                                                        <div class="col-md-7 col-8  comment-box">
+                                                                            <div>
+                                                                                <span><b>{{reply.commenter.user.username}}</b></span><span> {{reply.timeStamp|timesince}} ago</span>
+                                                                            </div>
+                                                                            <div class='mt-1 ms-1'>
+                                                                                <span>@<b>{{comment.commenter.user.username}}</b> {{reply.comment}}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                    {% endfor %}
+                                                </div>
+
+                                            </div> 
+                                            {% endfor %} 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='modal-footer row comment-modal'>
+                                    {% if user.is_authenticated %}
+                                        <form id='comment{{post.post_id}}' action="/postComments/" method='post' class='w-100 comment-form'> {% csrf_token %}
+                                            <input type="hidden" id='post_id' name='post_id' value='{{post.post_id}}'>
+                                            <input type="hidden" name="parent_id" id='parent_id' value="">
+                                            <textarea name="comment" id="comment{{post.post_id}}" class="form-control" cols="30" rows="2" placeholder='Comment Here about post..'></textarea>
+                                            <button type="submit" class='btn btn-light post-btn mt-1'>Post</button>
+                                        </form>
+                                    {% else %}
+                                    <span class='align-start'>Login to write Comment</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+
+    {% endblock body %}
+
+    {% block jsSrc %}/static/Posts/js/allPost.js{% endblock jsSrc %}

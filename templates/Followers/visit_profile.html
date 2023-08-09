@@ -4,17 +4,13 @@
 {% block linkCss %}/static/Followers/css/visit_profile.css{% endblock linkCss %}
 
 {% block body %}
-<div class="container mt-4 profileBg">
-    <div class="row">
-        <div class="d-md-flex">
-            <div class='col-4 text-center'>
-                {% if not profile_detail.profile_photo %}
-                    <img src="/static/default/image.png" alt="Profile Image" class="profile-image img-fluid">
-                {% else %}
+<div class="container mt-4">
+    <div class="row profileBg">
+        <div class="d-sm-flex col-6">
+            <div class='col-md-8 col-sm-7 col-6 text-center'>
                     <img src="/media/{{profile_detail.profile_photo}}" alt="Profile Image" class="profile-image img-fluid">
-                {% endif %}
             </div>
-            <div class='col-2'>
+            <div class='col-md-4 col-sm-6 col-12'>
                 <h2 class="profile-username">{{user_detail.username}}</h2>
                 <h2 class="profile-name">{{user_detail.first_name}} {{user_detail.last_name}}</h2>
                 {% if profile_detail.bio|length != 0 %}
@@ -23,38 +19,47 @@
 
                 {% endif %}
             </div>
-            <div class='col-4 mx-auto'>
-                <div class='row'>
-                    <div class='col-3'>
-                        <span>Followers {{followers_count}}</span>
-                    </div>
-                    <div class='col-3'>
-                        <span>Following {{following_count}}</span>
-                    </div>
+        </div>
+        <div class='col-6 mx-auto mt-3'>
+            <div class='row'>
+                <div class='col-xxl-3 col-lg-4 col-md-5 col-6'>
+                    <a href='/followers/visit_profile/{{user_detail.username}}/followers_list/' class='connection-list-btn btn-text'>Followers {{followers_count}}</a>
                 </div>
-
-                <div class='row mt-5'>
-                    {% if follow_status %}
-                        <div class='col-3'>
-                            <form action="/followers/visit_profile/{{user_detail.username}}/" method="post">{% csrf_token %}
-                                <input type="hidden" name='profileId' value='{{profile_detail.userProfile_id}}'>
-                                <input type="hidden" name='doFollowUnfollow' value='unfollow'>
-                                <button type='submit' class="btn follow-btn">Unfollow</button>
-                            </form>
-                        </div>
-                        <div class='col-3'>
-                            <a href="/messaging/do_message/{{room_name}}" class='btn btn-primary'>Message</a>
-                        </div>
-                    {% else %}
-                        <form action="/followers/visit_profile/{{user_detail.username}}/" method="post">{% csrf_token %}
-                            <input type="hidden" name='profileId' value='{{profile_detail.userProfile_id}}'>
-                            <input type="hidden" name='doFollowUnfollow' value='follow'>
-                            <button type='submit' class="btn follow-btn">Follow</button>
-                        </form>
-                    {% endif %}
+                <div class='col-xxl-3 col-lg-4 col-md-5 col-6'>
+                    <a href='/followers/visit_profile/{{user_detail.username}}/followings_list/' class='connection-list-btn btn-text'>Following {{following_count}}</a>
                 </div>
             </div>
+
+            <div class='row mt-sm-5 mt-2'>
+                {% if follow_status %}
+                    <div class='col-xxl-2 col-lg-3 col-md-4 col-sm-5 col-6'>
+                        <form action="/followers/visit_profile/{{user_detail.username}}/" method="post">{% csrf_token %}
+                            <input type="hidden" name='profileId' value='{{profile_detail.userProfile_id}}'>
+                            <input type="hidden" name='doFollowUnfollow' value='unfollow'>
+                            <button type='submit' class="btn follow-btn btn-text">Unfollow</button>
+                        </form>
+                    </div>
+                    <div class='col-xxl-2 col-lg-3 col-md-4 col-sm-5 col-6'>
+                        <a href="/messaging/do_message/{{room_name}}" class='btn btn-primary btn-text'>Message</a>
+                    </div>
+                {% else %}
+                    <form action="/followers/visit_profile/{{user_detail.username}}/" method="post">{% csrf_token %}
+                        <input type="hidden" name='profileId' value='{{profile_detail.userProfile_id}}'>
+                        <input type="hidden" name='doFollowUnfollow' value='follow'>
+                        <button type='submit' class="btn follow-btn btn-text">Follow</button>
+                    </form>
+                {% endif %}
+            </div>
         </div>
+    </div>
+    <div class='row profile-post'>
+        {% for key,cover_photo in cover_photos.items  %}
+        {% with cover_photo=cover_photo.image  %}    
+        <div class='col-4 col-sm-4 col-md-3 col-lg-2'>
+            <a href="/profile_posts/{{user_detail.username}}"><img src="/media/{{cover_photo}}/" class='profile-post-cover-image' alt=""></a>
+        </div>
+        {% endwith %}
+        {% endfor %}
     </div>
 </div>
 

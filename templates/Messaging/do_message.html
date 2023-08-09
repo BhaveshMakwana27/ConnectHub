@@ -26,17 +26,13 @@
                 <div class="card-body rounded">
                     <div id='visitProfile' class='mt-2 rounded-pill d-flex profile-box'>
                             <div>
-                                {% if receiver.profile_photo %}
                                     <img src="/media/{{receiver.profile_photo}}" class='profile-photo' alt="abc">
-                                {% else %}
-                                    <img src="/static/default/image.png" class='profile-photo' alt="abc">
-                                {% endif %}
                             </div>
                             <div>
                                 <h2 class="p-2 ms-3 mb-1 text-justify">{{receiver.user}}</h2>
                             </div>
                     </div>
-                    <div class='scroll mt-4 ml-4 p-3'id='chat-container'>
+                    <div class='scroll mt-4 ml-4 p-3'id='chat-container' style='margin-right: -16px;'>
                         {% for message in all_messages  %}
                             {% if message.sender != sender %}
                                 <div class="row  justify-content-start text-start mt-2">
@@ -49,10 +45,10 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                        <div class="input-group">
-                            <textarea id='chat-message-input' class="form-control" rows="3" name="message" placeholder="Type your message here..." required></textarea>
-                            <div class="input-group-append ms-2">
-                                <button id="chat-message-submit" type="submit" class="btn btn-primary vertical-center">Send</button>
+                        <div class="input-group border rounded-pill mt-3">
+                            <textarea id='chat-message-input' class="form-control rounded-pill no-border" rows="2" name="message" placeholder="Type your message here..." required></textarea>
+                            <div class="input-group-append ms-2 me-3 mt-1">
+                                <i id="chat-message-submit" type="submit" class="bi bi-send"></i>
                             </div>
                         </div>
                 </div>

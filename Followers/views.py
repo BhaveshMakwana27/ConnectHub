@@ -3,6 +3,8 @@ from Accounts.models import UserProfile
 from django.contrib.auth.models import User
 from Followers.models import Follow
 from Messaging.models import Room
+from Posts.models import Post,PostComment,PostImages,PostLike
+
 
 def handleFollowers(request):
     return HttpResponse('Followers')
@@ -24,12 +26,21 @@ def visit_profile(request,uname):
     # checking if the current user follows the visited profile user
     loggedIn_user = UserProfile.objects.get(user=request.user.id)
     following_status = Follow.objects.filter(follower=loggedIn_user,following=visitedProfile_detail).values('follower').count()
+
+     # getting user posts
+    posts = Post.objects.filter(uploader=visitedProfile_detail).order_by('uploadDate')
+    post_photos = PostImages.objects.filter(post__in=posts)
+    cover_photos = {}
+    for post_photo in post_photos:
+        if post_photo.post not in cover_photos.keys():
+            cover_photos[post_photo.post] = post_photo
     
     context = {
         'user_detail':user_detail,
         'profile_detail':visitedProfile_detail,
         'following_count':following_count,
         'followers_count':followers_count,
+        'cover_photos':cover_photos
     }
 
     if following_status == 0:
@@ -75,3 +86,15 @@ def createRoom(sender,receiver):
     sortedRoomname = sorted(roomNameList)
     room = 'chat-'+sortedRoomname[0]+'-'+sortedRoomname[1]
     return room
+
+def followers_list(request,uname):
+    visitedProfile = UserProfile.objects.get(user=User.objects.get(username=uname))
+    followers = Follow.objects.filter(following=visitedProfile).values('follower')
+    profile = UserProfile.objects.filter(userProfile_id__in=followers)
+    return render(request,'Followers/followers_list.html',{'followers':profile})
+
+def following_list(request,uname):
+    visitedProfile = UserProfile.objects.get(user=User.objects.get(username=uname))
+    followings = Follow.objects.filter(follower=visitedProfile).values('following')
+    profile = UserProfile.objects.filter(userProfile_id__in=followings)
+    return render(request,'Followers/followings_list.html',{'followings':profile})

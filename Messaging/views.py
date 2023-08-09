@@ -4,7 +4,7 @@ from Accounts.models import UserProfile
 from django.contrib.auth.models import User
 from Messaging.models import Message,Room
 from Followers.models import Follow
-from itertools import chain
+from django.db.models import Q
 
 
 def allMessageRoomListFetch(request):
@@ -12,17 +12,10 @@ def allMessageRoomListFetch(request):
     followers = Follow.objects.filter(follower=CurrUserInfo).values('follower')
     allMessagesRoomList = Follow.objects.filter(follower__in=followers)
 
-    # distinct_senders = Message.objects.filter(receiver=CurrUserInfo).values('sender').distinct()
-    # print(distinct_senders)
-    # distinct_receivers = Message.objects.filter(sender=CurrUserInfo).values('receiver').distinct()
-
-    # allMessages = Message.objects.filter(
-    #     receiver__in=distinct_receivers,
-    # ).order_by('timeStamp')
-    # print(allMessages)
 
     return allMessagesRoomList
 
+@login_required
 def handleMessageRoomList(request):
     # getting all messages list to display in messages list
     allMessages = allMessageRoomListFetch(request)
@@ -63,10 +56,4 @@ def handleMessages(request,room_name):
         'messages_with_rooms':messages_with_rooms
     }
 
-    # if request.method == 'POST':
-    #     messageContent = request.POST.get('message')
-    #     sendMassage = Message(sender=sender,receiver = receiver, content = messageContent)
-    #     sendMassage.save()
-
-    #     return redirect(f'/messaging/do_message/{username}')
     return render(request,'Messaging/do_message.html',context)

@@ -5,7 +5,7 @@
 {% block linkCss %}/static/Accounts/css/editProfile.css{% endblock linkCss %}
 
 {% block body %}
-<div class="container w-50">
+<div class="container col-lg-6 col-12">
     <div class='row p-3 mb-2 bg-info-subtle text-emphasis-info row rounded'>
         <h3 class='justify-content-center d-flex'>Edit Your Profile</h3>
     </div>
@@ -15,11 +15,7 @@
                 <div  class="profile-image-container mx-auto">
                     <input type="file" accept="image/*" id="editProfilePhoto" name="editProfilePhoto" class="profile-input">
                     <label for="editProfilePhoto" class="profile-label">
-                        {% if not curr_detail.profile_photo %}
-                            <img src='/static/default/image.png' id='default-image' alt="Profile Photo" class="profile-preview">
-                        {% else %}
                             <img src='/media/{{curr_detail.profile_photo}}' id='default-image' alt="Profile Photo" class="profile-preview">
-                        {% endif %}
                       <div id='previewImage'>
                         {% comment %} Uploaded Image will be previewed here {% endcomment %}
                       </div>

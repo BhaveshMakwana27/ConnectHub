@@ -6,8 +6,6 @@
     padding-inline: 30px;
 }
 
-
-
 .post-images{
     max-width: 100%;
     width: auto;
@@ -30,4 +28,37 @@
     margin: 17px;
     text-decoration: none;
     color: black;
+}
+
+
+
+/* Modal */
+.modal-dialog{
+    max-width: 800px;
+}
+
+.comment-modal{
+    box-shadow: -20px 5px 20px rgb(216, 216, 216);
+}
+
+.comment-box{
+    background-color: rgb(244 244 244);
+    border-radius: 15px;
+    padding: 6px;
+}
+
+.comments-profile-photo{
+    height: 34px;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+}
+
+.modal-header-theme{
+    height: 73px;
+    padding-top: 27px ;
+}
+
+.post-btn{
+    float: right;
 }

@@ -31,6 +31,11 @@
     display: block;
 }
 
+#chat-message-submit{
+    font-size:20px; 
+    margin-top: 10px;
+}
+
 .timeStamp{
     font-size: 11px;
     margin-left: 2px;

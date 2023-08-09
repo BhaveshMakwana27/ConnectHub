@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from datetime import datetime,timedelta
 import pytz
 
+
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
@@ -73,4 +74,4 @@ class ChatConsumer(WebsocketConsumer):
         # message current time
         timezone = pytz.timezone('Asia/Kolkata')
         currTime = datetime.now(timezone)+ timedelta(hours=5, minutes=30)
-        Message.objects.create(sender=senderName,receiver=receiverName,content=message,timeStamp=currTime )
+        Message.objects.create(sender=senderName,receiver=receiverName,content=message,timeStamp=currTime)

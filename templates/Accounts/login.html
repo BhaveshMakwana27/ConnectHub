@@ -3,13 +3,13 @@
 {% block title %}Login{% endblock title %}
 
 {% block body %}
-<div class="container mt-4 w-25">
-    <div class='p-3 mb-2 bg-info-subtle text-emphasis-info row rounded'>
+<div class="container mt-4 col-12 col-md-7 col-lg-4">
+    <div class='row p-3 mb-2 bg-info-subtle text-emphasis-info rounded'>
         <h1 class='justify-content-center d-flex'>Login</h1>
     </div>
 
     <div class='row mt-4 p-3'>
-    <form method='POST' action='/account/login/'> {% csrf_token %}
+      <form method='POST' action='/account/login/'> {% csrf_token %}
 
         <div class="mt-2">
           <label for="loginusername" class="form-label">UserName</label>

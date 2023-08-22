@@ -6,14 +6,14 @@
 <div>
     <div class="container">
         <div class="row justify-content-center bg-light rounded p-3 mt-3">
-            <div class="col-lg-6 col-md-8 col-sm-10"> <!-- Set appropriate column widths for different screen sizes -->
+            <div class="col-lg-6 col-md-8  col-12"> <!-- Set appropriate column widths for different screen sizes -->
                 {% for profile in profile_list %}
                 <div class="mt-2">
                     <div class='d-flex container'>
-                        <div class='col-md-2 col-sm-3'>
+                        <div class='col-3 col-md-2 d-inline-block'>
                                 <img src="/media/{{profile.profile_photo}}" alt="" srcset="" class='profile_list_imgs'>
                         </div>
-                        <div class='col-md-6 col-sm-5 ms-1'>
+                        <div class='col-5 col-sm-6 ms-1'>
                             <span><b>{{profile.user}}</b></span>
                         </div>
                         <a href="/followers/visit_profile/{{profile.user}}" class='btn'>Visit Profile</a>

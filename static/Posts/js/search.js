@@ -1,3 +1,22 @@
+$(window).on('resize',function(){
+    filterCollapse()
+})
+filterCollapse()
+function filterCollapse(){
+    let width = window.innerWidth
+    let filters = document.getElementById('filters')
+    let filterCollapse = document.getElementById('collapseFilter')
+    if (width<992){
+        filters.hidden = true
+        filterCollapse = false
+    }else{
+        filters.hidden = false
+        filterCollapse = true
+
+    }
+}
+
+
 searchPost = document.getElementById('searchPosts')
 searchPeople = document.getElementById('searchPeople')
 
@@ -18,39 +37,7 @@ filtePostBtn.onclick = ()=>{
 }
 
 
-// Handle Likes 
-$('.like-form').submit(function (e) {
-    const post_id = $(this).attr('id')
-    const url = this.action
-    let likeBtn = document.getElementById('likeButton' + post_id)
-    let count_like = document.getElementById('likes_count' + post_id)
-    
-    $.ajax({
-        type: 'POST',
-        url: url,
-        data: {
-            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
-            'post_id': post_id
-        },
-        encode: true
-    }).done((data) => {
-        like_status = JSON.parse(data)['like_status']
-        totalLikes = Number.parseInt(count_like.innerText)
-        if (like_status == false) {
-            totalLikes -= 1
-            if (totalLikes==0){
-                count_like.hidden=true
-                count_like.innerHTML = '0'
-            }else{
-                count_like.innerHTML = `<i class='bi bi-hand-thumbs-up-fill' style='color:#0000ffbd'></i> ${totalLikes}`
-            }
-            likeBtn.innerHTML = `<i class="bi bi-hand-thumbs-up"></i> Like`
-        } else {
-            count_like.hidden = false
-            totalLikes += 1
-            count_like.innerHTML = `<i class='bi bi-hand-thumbs-up-fill' style='color:#0000ffbd'></i> ${totalLikes}`
-            likeBtn.innerHTML = `<i class="bi bi-hand-thumbs-up-fill"></i> Liked`
-        }
-    })
-    e.preventDefault()
-})
+
+
+
+

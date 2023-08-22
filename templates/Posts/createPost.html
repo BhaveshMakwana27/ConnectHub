@@ -4,15 +4,15 @@
 {% block body %}
 
 
-    <div class="container col-12 col-md-6">
+    <div class="container col-12 col-md-7 col-lg-6">
         <div class='row p-3 mb-2 bg-info-subtle text-emphasis-info row rounded'>
             <h1 class='justify-content-center d-flex'>Create Post</h1>
         </div>
     
         <div class='row mt-4 p-3'>
                 <form method='POST' action='/createPost/{{user.username}}/' enctype="multipart/form-data" > {% csrf_token %}
-                    <div  class="profile-image-container mx-auto">
-                        <input type="file" accept="image/*" id="postImages" multiple name="postImages" class="profile-input">
+                    <div class=" mx-auto">
+                        <input type="file" accept="image/*" id="postImages" multiple name="postImages">
                         <label for="postImages" class="profile-label mt-2">
                           <div id='previewImage'>
                             {% comment %} Uploaded Image will be previewed here {% endcomment %}
@@ -24,7 +24,7 @@
                         <textarea type="text" class="form-control" id="post_desc" name='post_desc' rows='8' placeholder='Write Description here'></textarea>
                     </div>
                     <button type="submit" class="btn btn-success mt-3">Post</button>
-                  </form>
+                </form>
         </div>
     </div>
 

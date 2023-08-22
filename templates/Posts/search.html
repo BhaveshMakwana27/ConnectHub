@@ -4,9 +4,28 @@
 {% block body %}
 {% load getDict %}
 
-<div class='container-fluid d-flex'>
-    
-    <div class='col-3 m-5 bg-light rounded h-100'>
+<div class='container-fluid'>
+    <div class='row d-flex d-lg-none justify-content-end rounded'>
+        <div class="dropdown w-auto">
+            <button class="btn btn-light dropdown-toggle" id="collapseFilter" type="button" data-bs-toggle="dropdown">
+                Filters
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <h5 class='p-2'>
+                    <p id='filter-people' class='filter-list dropdown-item'>
+                        <i class="bi bi-people"></i>
+                        People</p>
+                    <p id='filter-post' class='filter-list dropdown-item'>
+                        <i class='bi bi-file-earmark-post-fill'></i>
+                    Posts</p>  
+                </h5>
+            </ul>
+        </div>
+    </div>
+
+    <div class='row d-flex justify-content-center'>
+
+    <div id='filters' class='col-4 col-lg-3 m-5 bg-light rounded h-100'>
         <div class='p-3'>
             <h3 class='border-bottom'>
                 Search Results...
@@ -27,8 +46,7 @@
         </div>
     </div>
 
-    <div class="col-6">
-
+    <div class="col-11 col-md-9 col-lg-7">
         {% if qUserResults|length < 1 and qPostResults|length < 1 %}
             <span>Your search - <b>{{query}}</b> - did not match any documents.</span>
                 <div class='mt-4'>
@@ -48,10 +66,10 @@
                 {% for profile in qUserResults %}
                     <div class="resultBg mt-2">
                         <div class='d-flex container'>
-                            <div class='col-md-2 col-sm-3'>
+                            <div class='col-2 me-1'>
                                     <img src="/media/{{profile.profile_photo}}" alt="" srcset="" class='profile_list_imgs'>
                             </div>
-                            <div class='col-md-5 col-sm-5 col-6 ms-1'>
+                            <div class='col-5 col-sm-6 ms-1'>
                                 <span><b>{{profile.user}}</b></span>
                             </div>
                             <a href="/followers/visit_profile/{{profile.user}}" class='btn'>Visit Profile</a>
@@ -61,6 +79,7 @@
 
             </div>
         </div>
+
         <div id='searchPosts' class="row mt-3 bg-light rounded p-3" {% if qPostResults|length < 1 %} hidden {% endif %}>
             <h4>Posts..</h4>
             <div class="container  col-12">
@@ -330,7 +349,8 @@
                 </div>
         </div>
     </div>
-    {% endif %}
+    {% endif %}   
+</div>
 </div>
 {% endblock body %}
 {% block jsSrc %}/static/Posts/js/search.js{% endblock jsSrc %}

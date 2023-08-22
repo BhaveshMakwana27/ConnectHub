@@ -5,9 +5,9 @@
 
 {% block body %}
 
-<div class="container mt-4">
+<div class="container col-12 col-lg-9 ">
     <div class="row justify-content-center" >
-        <div class="col-md-4 element">
+        <div class="col-4 element">
             <h2 class="mb-3">Contacts</h2>
                 {% for message,room in messages_with_rooms %}
                 <div class='msg-list m-1'>
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Right Sidebar - Chat Window -->
-        <div class="col-md-5">
+        <div class="col-12 col-sm-8">
             <div class="card msg-card-bg">
                 <div class="card-body rounded">
                     <div id='visitProfile' class='mt-2 rounded-pill d-flex profile-box'>

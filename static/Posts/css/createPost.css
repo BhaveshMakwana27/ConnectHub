@@ -1,5 +1,9 @@
-#previewImage img {
+img {
     max-width: 100px;
     max-height: 100px;
     margin: 5px;
   }
+
+#postImages{
+  width: 214px;
+}
